@@ -10,7 +10,8 @@ function Game() {
   const location = useLocation();
   const Navigate = useNavigate();
   const { gameid } = useParams();
-  const sessionGame = location.state;
+  //@ts-expect-error
+  const sessionGame = JSON.parse(sessionStorage.getItem('game'))
   const [questionCounter, setQuestionCounter] = useState(1);
   const [usersRight, setUsersRight] = useState<string[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(

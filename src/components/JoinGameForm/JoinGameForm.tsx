@@ -24,7 +24,7 @@ function JoinGameForm({ players, setPlayers }: Props) {
     if(encodedString){
     const data = JSON.parse(decodeURIComponent(encodedString));
     setSessionPlayers(data.relationships.players.data);
-    setSessionGame(data);
+    sessionStorage.setItem(data,'game')
     }
   }, [encodedString]);
 
