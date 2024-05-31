@@ -3,6 +3,7 @@ import type { Player, ServerToClientEvents, ClientToServerEvents } from '../Util
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Copy } from 'react-feather';
+import Modal from '../Modal/Modal';
 import { patchGame } from '../Util/fetchCalls';
 //import { io, Socket } from 'socket.io-client'; 
 
