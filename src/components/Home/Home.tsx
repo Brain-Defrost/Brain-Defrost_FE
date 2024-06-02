@@ -78,6 +78,7 @@ function Home({ setGame, setPlayers }: Props) {
       setIsGameCreate(false)
       console.log("newGame", newGame);
     } catch (error) {
+      setIsGameCreate(false)
       setError(`${error}`);
       console.log(error);
     }
