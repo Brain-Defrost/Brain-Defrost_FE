@@ -20,6 +20,8 @@ function Lobby({players}: Props) {
     const [joinURL, setJoinUrl] = useState('');
     const [error, setError] = useState<string>('');
 
+    //establish websocket connection here
+
     useEffect(() => {
         // @ts-expect-error
         const sessionGame = JSON.parse(sessionStorage.getItem('game'))

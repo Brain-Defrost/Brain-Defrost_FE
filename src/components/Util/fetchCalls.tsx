@@ -69,6 +69,7 @@ const postPlayer = async (gameID: string | undefined, displayName: string) => {
     );
     if (!response.ok) {
       const status = response.status;
+      console.log(response)
       console.log(status);
       throw new Error(`Couldn't create player - ${status}`);
     }

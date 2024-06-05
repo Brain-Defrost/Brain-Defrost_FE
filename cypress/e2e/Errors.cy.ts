@@ -79,7 +79,7 @@ describe('Brain Defrost Error Handling', () => {
     .get('#join-game-button').click()
     .get('.alert-modal').contains('h2', 'Alert!')
     .get('.alert-modal').contains('p', 'Couldn\'t create player - 403')
-    .get('.modal-close-btn').contains('Close').click()
+    .get('.modal-close-btn').contains('Home').click()
     .get('alert-modal').should('not.exist')
   })
   it('Displays error message if game cannot be started', () => {
