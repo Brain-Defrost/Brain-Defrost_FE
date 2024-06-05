@@ -22,6 +22,11 @@ function Lobby({players}: Props) {
 
     //establish websocket connection here
 
+    // let socket = new WebSocket('wss://localhost:3000')
+    // console.log(socket)
+    let socket = new WebSocket('wss://www.brain-defrost-f8afea5ead0a.herokuapp.com')
+    console.log(socket)
+
     useEffect(() => {
         // @ts-expect-error
         const sessionGame = JSON.parse(sessionStorage.getItem('game'))

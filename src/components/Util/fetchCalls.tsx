@@ -70,6 +70,7 @@ const postPlayer = async (gameID: string | undefined, displayName: string) => {
     if (!response.ok) {
       const status = response.status;
       console.log(response)
+      //use response text instead for descriptive message like "max number of player met"
       console.log(status);
       throw new Error(`Couldn't create player - ${status}`);
     }
