@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState } from "react";
 import "./Home.css";
 import Modal from "../Modal/Modal";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import type { Game, Player } from "../Util/interfaces";
 import brainGif from "../../images/Brain gif.gif"
 import star from "../../images/Star 1.png"
 // import useWebSocket from "react-use-websocket";
-import actionCable from 'actioncable';
+// import actionCable from 'actioncable';
 
 
 interface Props {
@@ -15,10 +15,10 @@ interface Props {
   setPlayers: (playersArray: Player[]) => void;
 }
 
-interface NotificationTypes {
-  user: number,
-  message: string
-}
+// interface NotificationTypes {
+//   user: number,
+//   message: string
+// }
 
 function Home({ setGame, setPlayers }: Props) {
   const [error, setError] = useState<string>("");
@@ -33,39 +33,38 @@ function Home({ setGame, setPlayers }: Props) {
 
 
   // const cableApp = actionCable.createConsumer('ws://brain-defrost-f8afea5ead0a.herokuapp.com/cable');
-  const [channel, setChannel] = useState<null | actionCable.Channel>(null);
+  // const [channel, setChannel] = useState<null | actionCable.Channel>(null);
 
-  useEffect(() => {
-    if (channel !== null) channel.unsubscribe();
-    // destroy possible duplicate connections
+  // useEffect(() => {
+  //   if (channel !== null) channel.unsubscribe();
+  //   // destroy possible duplicate connections
  
-    // setChannel(
-    //   cableApp.subscriptions.create(
-    //     {
-    //       channel: 'NotificationsChannel',
-    //       user_id: 1,
-    //       // channel that will be used for the connection
-    //     },
-    //     {
-    //       received: (message: NotificationTypes) => {
-    //         // function that will be executed when a message is received
+  //   // setChannel(
+  //   //   cableApp.subscriptions.create(
+  //   //     {
+  //   //       channel: 'NotificationsChannel',
+  //   //       user_id: 1,
+  //   //       // channel that will be used for the connection
+  //   //     },
+  //   //     {
+  //   //       received: (message: NotificationTypes) => {
+  //   //         // function that will be executed when a message is received
             
-    //         console.log('Yay! :D')
-    //         console.log(message);
+  //   //         console.log('Yay! :D')
+  //   //         console.log(message);
            
-    //       },
-    //     },
-    //   ),
-    // );
-  }, []);
+  //   //       },
+  //   //     },
+  //   //   ),
+  //   // );
+  // }, []);
   
   const socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
-  // console.log(socket)
+
   socket.onopen = function(e) {
     alert("Connection established girllllll!");
-    // alert("Sending to server");
     console.log(e)
-    socket.send("Take a pom, Tayla ♥️");
+    socket.send("My name is John");
   }
 
   socket.onmessage = function(e) {
@@ -73,6 +72,24 @@ function Home({ setGame, setPlayers }: Props) {
     alert(`[message] Data received from server: ${e.data}`);
   };
 
+  socket.onclose = function(e) {
+    if (e.wasClean) {
+      alert(`[close] Connection closed cleanly, code=${e.code} reason=${e.reason}`)
+    } else {
+      alert('Connection died :(')
+    }
+  };
+
+  socket.onerror = function(error) {
+    alert(error)
+  }
+
+  // let socket = new WebSocket("wss://javascript.info/chat", ["soap", "wamp"]);
+
+
+  // socket.onopen = function(e) {
+  //   alert('Connected to chat socket')
+  // }
   // socket.addEventListener("open", (event) => {
   //   socket.send("Connection established");
   // });
