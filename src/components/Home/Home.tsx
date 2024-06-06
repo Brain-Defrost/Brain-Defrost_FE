@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import "./Home.css";
 import Modal from "../Modal/Modal";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,18 @@ import { postGame } from "../Util/fetchCalls";
 import type { Game, Player } from "../Util/interfaces";
 import brainGif from "../../images/Brain gif.gif"
 import star from "../../images/Star 1.png"
-import useWebSocket from "react-use-websocket";
+// import useWebSocket from "react-use-websocket";
+import actionCable from 'actioncable';
+
 
 interface Props {
   setGame: (game: Game) => void;
   setPlayers: (playersArray: Player[]) => void;
+}
+
+interface NotificationTypes {
+  user: number,
+  message: string
 }
 
 function Home({ setGame, setPlayers }: Props) {
@@ -23,6 +30,33 @@ function Home({ setGame, setPlayers }: Props) {
     number_of_players: 1,
     display_name: "",
   });
+
+  const cableApp = actionCable.createConsumer('ws://brain-defrost-f8afea5ead0a.herokuapp.com/cable');
+  const [channel, setChannel] = useState<null | actionCable.Channel>(null);
+
+  useEffect(() => {
+    if (channel !== null) channel.unsubscribe();
+    // destroy possible duplicate connections
+ 
+    setChannel(
+      cableApp.subscriptions.create(
+        {
+          channel: 'NotificationsChannel',
+          user_id: 1,
+          // channel that will be used for the connection
+        },
+        {
+          received: (message: NotificationTypes) => {
+            // function that will be executed when a message is received
+            
+            console.log('Yay! :D')
+            console.log(message);
+           
+          },
+        },
+      ),
+    );
+  }, []);
   
   // const socket = new WebSocket("wss://brain-defrost-f8afea5ead0a.herokuapp.com/api/vi");
 
