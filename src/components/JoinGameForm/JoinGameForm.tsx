@@ -1,7 +1,7 @@
 import "./JoinGameForm.css";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { postPlayer } from "../Util/fetchCalls";
+import { postPlayer, getGame } from "../Util/fetchCalls";
 import type { Player } from "../Util/interfaces";
 import Modal from "../Modal/Modal";
 
@@ -11,25 +11,32 @@ interface Props {
 }
 
 function JoinGameForm({ players, setPlayers }: Props) {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const encodedString = params.get("data");
   const { gameid } = useParams<string>();
   const [displayName, setDisplayName] = useState<string>("");
   const [sessionPlayers, setSessionPlayers] = useState<Player[]>([]);
-  const [sessionGame, setSessionGame] = useState<any>(null);
+  const [game, setGame] = useState<any>(null);
   const [nameAvailable, setNameAvailable] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (encodedString) {
-      const data = JSON.parse(decodeURIComponent(encodedString));
-      setSessionPlayers(data.relationships.players.data);
-      setSessionGame(data);
-      sessionStorage.setItem("game", JSON.stringify(data));
+    // @ts-expect-error
+    fetchGame(gameid);
+    // eslint-disable-next-line 
+  }, []);
+
+  const fetchGame = async (gameID: string) => {
+    try {
+      const currentGame = await getGame(gameID);
+      setGame(currentGame.data);
+      setPlayers(currentGame.data.relationships.players.data)
+      setSessionPlayers(currentGame.data.relationships.players.data)
+      
+    } catch (error) {
+      setError(`${error}`);
+      console.log(error);
     }
-  }, [encodedString]);
+  };
 
   const isNameAvailable = (nameInput: string): boolean => {
     const playerNames = sessionPlayers.map(
@@ -57,12 +64,8 @@ function JoinGameForm({ players, setPlayers }: Props) {
     try {
       const newPlayer = await postPlayer(gameID, nameString);
       setPlayers([...players, newPlayer.data]);
-      sessionStorage.setItem('currentPlayer', JSON.stringify(newPlayer.data))
-      sessionStorage.setItem(
-        "players",
-        JSON.stringify([...sessionPlayers, newPlayer.data])
-      );
-      navigate(`/game/lobby/${gameid}`, { state: sessionGame });
+      sessionStorage.setItem('currentPlayer', JSON.stringify(newPlayer.data));
+      navigate(`/game/lobby/${gameid}`, { state: game });
     } catch (error) {
       setError(`${error}`);
       console.log(error);

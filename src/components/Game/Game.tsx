@@ -22,7 +22,6 @@ function Game() {
 
   //@ts-expect-error
   const currentPlayer = JSON.parse(sessionStorage.getItem("currentPlayer"));
-  // console.log({currentPlayer});
 
   const [currentAnswer, setCurrentAnswer] = useState(
     sessionGame.relationships.questions.data.find(
@@ -51,16 +50,13 @@ function Game() {
   const checkAnswer = async (ans: string) => {
     if (ans === currentAnswer) {
       const currentPlayerId = currentPlayer.id.toString();
-      await patchPlayer(gameid!, currentPlayerId!, currentQuestion);
+      let currentQuestionNum = currentQuestion.attributes.question_number;
+      await patchPlayer(gameid!, currentPlayerId!, currentQuestionNum);
     }
     const playersList = await getAllPlayers(gameid);
-    // console.log('playersList', playersList);
     let rightUsers = playersList.data.filter((player:Player ) =>
       player.attributes.questions_correct.some(
-        // (qNum: string) => qNum === questionCounter.toString()
-        (qNum: string) => qNum.includes(questionCounter.toString()) 
-        //waiting for fix from BE team for to have access to question objects instead of strings
-        //after BE fix refactor this line to access the question number to compare to the questionCounter
+        (qNum: string) => qNum === questionCounter.toString()
       )
     );
     if (rightUsers) {

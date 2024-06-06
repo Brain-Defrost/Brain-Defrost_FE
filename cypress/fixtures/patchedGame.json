@@ -1,46 +1,77 @@
+
 {
-    "data": {
-      "id": 0,
-      "type": "string",
+  "data": {
+      "id": 1,
+      "type": "game",
       "attributes": {
-        "link": "string",
-        "started": true,
-        "number_of_questions": 0,
-        "number_of_players": 0,
-        "topic": "string",
-        "time_limit": 0
+          "link": "www.example.com",
+          "started": true,
+          "number_of_questions": 2,
+          "number_of_players": 3,
+          "topic": "music",
+          "time_limit": 30
       },
       "relationships": {
-        "players": {
-          "data": [
-            {
-              "id": 0,
-              "type": "string",
-              "attributes": {
-                "display_name": "string",
-                "answers_correct": 0,
-                "answers_incorrect": 0
-              }
-            }
-          ]
-        },
-        "questions": {
-          "data": [
-            {
-              "id": "Unknown Type: string,null",
-              "type": "string",
-              "attributes": {
-                "topic": "string",
-                "question_text": "string",
-                "question_number": 0,
-                "answer": "string",
-                "options": [
-                  "string"
-                ]
-              }
-            }
-          ]
-        }
+          "players": {
+              "data": [
+                  {
+                      "id": 1,
+                      "type": "player",
+                      "attributes": {
+                          "display_name": "creator",
+                          "answers_correct": 0,
+                          "answers_incorrect": 0,
+                          "questions_correct": []
+                      }
+                  },
+                  {
+                    "id": 2,
+                    "type": "player",
+                    "attributes": {
+                        "display_name": "student1",
+                        "answers_correct": 0,
+                        "answers_incorrect": 0,
+                        "questions_correct": []
+                    }
+                }
+              ]
+          },
+          "questions": {
+              "data": [
+                  {
+                      "id": null,
+                      "type": "question",
+                      "attributes": {
+                          "topic": "Music Trivia",
+                          "question_text": "Who is the lead vocalist of The Beatles?",
+                          "question_number": 1,
+                          "answer": "John Lennon",
+                          "options": [
+                              "Paul McCartney",
+                              "George Harrison",
+                              "Ringo Starr",
+                              "John Lennon"
+                          ]
+                      }
+                  },
+                  {
+                      "id": null,
+                      "type": "question",
+                      "attributes": {
+                          "topic": "Music Trivia",
+                          "question_text": "Which artist is known as the 'Queen of Pop'?",
+                          "question_number": 2,
+                          "answer": "Madonna",
+                          "options": [
+                              "Beyonce",
+                              "Taylor Swift",
+                              "Adele",
+                              "Madonna"
+                          ]
+                      }
+                  }
+              ]
+          }
       }
-    }
   }
+}

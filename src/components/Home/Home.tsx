@@ -31,34 +31,47 @@ function Home({ setGame, setPlayers }: Props) {
     display_name: "",
   });
 
-  const cableApp = actionCable.createConsumer('ws://brain-defrost-f8afea5ead0a.herokuapp.com/cable');
+
+  // const cableApp = actionCable.createConsumer('ws://brain-defrost-f8afea5ead0a.herokuapp.com/cable');
   const [channel, setChannel] = useState<null | actionCable.Channel>(null);
 
   useEffect(() => {
     if (channel !== null) channel.unsubscribe();
     // destroy possible duplicate connections
  
-    setChannel(
-      cableApp.subscriptions.create(
-        {
-          channel: 'NotificationsChannel',
-          user_id: 1,
-          // channel that will be used for the connection
-        },
-        {
-          received: (message: NotificationTypes) => {
-            // function that will be executed when a message is received
+    // setChannel(
+    //   cableApp.subscriptions.create(
+    //     {
+    //       channel: 'NotificationsChannel',
+    //       user_id: 1,
+    //       // channel that will be used for the connection
+    //     },
+    //     {
+    //       received: (message: NotificationTypes) => {
+    //         // function that will be executed when a message is received
             
-            console.log('Yay! :D')
-            console.log(message);
+    //         console.log('Yay! :D')
+    //         console.log(message);
            
-          },
-        },
-      ),
-    );
+    //       },
+    //     },
+    //   ),
+    // );
   }, []);
   
-  // const socket = new WebSocket("wss://brain-defrost-f8afea5ead0a.herokuapp.com/api/vi");
+  const socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
+  // console.log(socket)
+  socket.onopen = function(e) {
+    alert("Connection established girllllll!");
+    // alert("Sending to server");
+    console.log(e)
+    socket.send("Take a pom, Tayla ♥️");
+  }
+
+  socket.onmessage = function(e) {
+    console.log(e)
+    alert(`[message] Data received from server: ${e.data}`);
+  };
 
   // socket.addEventListener("open", (event) => {
   //   socket.send("Connection established");

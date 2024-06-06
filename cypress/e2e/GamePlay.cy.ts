@@ -10,6 +10,11 @@ describe('Brain Defrost GamePlay Stories', () => {
       statusCode: 200,
       fixture: 'patchedGame'
     }).as('startGame')
+    cy.intercept('GET', 'https://brain-defrost-f8afea5ead0a.herokuapp.com/api/v1/games/1',
+      {
+        statusCode: 201,
+        fixture: 'patchedGame'
+      }).as('getGame')
     cy.intercept('PATCH', 'https://brain-defrost-f8afea5ead0a.herokuapp.com/api/v1/games/1/players/1',
       {
         statusCode: 200,
