@@ -207,7 +207,6 @@ const postEmail = async (gameID: string | undefined, email: string | undefined) 
       console.log(status);
       throw new Error(`Couldn't send email - ${status}`);
     }
-    // return await response.json();
   } catch (error: unknown) {
     console.log("API CALLS catch block - email stats", error);
     throw error;
