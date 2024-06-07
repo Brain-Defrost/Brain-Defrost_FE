@@ -21,17 +21,7 @@ function Home({ setGame, setPlayers }: Props) {
     number_of_players: 1,
     display_name: "",
   });
-  /*
-  const socket = new WebSocket("ws://c98a077d-6c2a-4ca9-a867-cf11b6279230.mock.pstmn.io/api/v1/games");
 
-  socket.addEventListener("open", (event) => {
-    socket.send("Connection established");
-  });
-
-  socket.addEventListener("message", (event) => {
-    console.log("Message from server ", event.data);
-  });
-  */
   const Navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

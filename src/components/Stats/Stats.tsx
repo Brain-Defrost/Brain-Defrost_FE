@@ -96,7 +96,7 @@ function Stats() {
       <button className='send-stats-btn' onClick={showForm}>Send Me The Stats</button>
       <button className='new-game-btn' onClick={goHome}>Generate A New Game</button>
       </div>
-      {openDialoge && <SendStatsForm closeForm={closeForm} gameId={finalStats?.data.id}/>}
+      {openDialoge && <SendStatsForm closeForm={closeForm} gameId={gameid}/>}
     </div>
   );
 }
